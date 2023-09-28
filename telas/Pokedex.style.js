@@ -3,29 +3,28 @@ import { StyleSheet } from "react-native";
 export const PokedexStyle = StyleSheet.create({
     main_container: {
         flex: 1,
-        
         display: "flex",
-        flexDirection:'column',
+        flexDirection: 'column',
         alignItems: "center",
         backgroundColor: '',
     },
-    scroll_container:{
+    scroll_container: {
         backgroundColor: 'white'
     },
-    pokeCanva:{
+    pokeCanva: {
         backgroundColor: 'gray',
         margin: 5,
         width: 160,
         height: 160,
         borderRadius: 10,
-        display:'flex',
-        flexDirection:'column',
+        display: 'flex',
+        flexDirection: 'column',
         justifyContent: "center",
-        alignItems:'center'
+        alignItems: 'center'
     }
     ,
-    name:{
-        color:'white'
+    name: {
+        color: 'white'
     },
     filter: {
         position: "absolute",
@@ -35,9 +34,18 @@ export const PokedexStyle = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         top: "80%",
-        borderColor:'black',
+        borderColor: 'black',
         borderWidth: 1
-        
-      }
+
+    },
+    load_image: {
+        resizeMode: "center"
+    },
+    canva_load: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: 'center'
+    }
 });
 
