@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Image, TextInput } from "react-native";
+import { View, Text, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 import { PokedexStyle } from "./Pokedex.style";
 import axios from "axios";
 import { Pokemon } from "./objects/pokemon";
 import { Colorback } from "./objects/type.enum";
 
-export const Pokedex = () => {
+export const Pokedex = ({ navigation }) => {
     const [pokemons, setPokemons] = useState([]);
     const [display_pokemons, setDisplay] = useState([]);
-
     const [filter, setFilter] = useState('');
 
     const [dataReady, setDataReady] = useState(false); // Estado para controlar se os dados estão prontos
@@ -17,7 +16,7 @@ export const Pokedex = () => {
         const getPokemons = async () => {
             try {
                 const res = await axios.get(
-                    "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20000"
+                    "https://pokeapi.co/api/v2/pokemon?offset=20&limit=200"
                 );
                 const mypoke = await Promise.all(
                     res.data.results.map(async (item) => {
@@ -59,12 +58,14 @@ export const Pokedex = () => {
     const renderItem = ({ item }) => {
         const backgroundColor = Colorback[item.main_type]; // Obtém a cor do objeto item
         return (
-            <View style={[PokedexStyle.pokeCanva, { backgroundColor }]}>
+            <TouchableOpacity style={[PokedexStyle.pokeCanva, { backgroundColor }]}
+            onPress={()=> navigation.navigate('InfoPokemon',{name:item.name})}
+            >
                 {dataReady ? (
                     <Image source={{ uri: item.photo }} style={{ width: 100, height: 100 }} />
                 ) : null}
                 <Text style={PokedexStyle.name}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
         );
     };
 
