@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Image, TextInput } from "react-native";
+import { View, Text, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 import { PokedexStyle } from "./Pokedex.style";
 import axios from "axios";
 import { Pokemon } from "./objects/pokemon";
 import { Colorback } from "./objects/type.enum";
+import { LoadScreen } from "./load/LoadScreen";
+import { useNavigation } from "@react-navigation/native";
 
 export const Pokedex = () => {
     const [pokemons, setPokemons] = useState([]);
@@ -16,19 +18,17 @@ export const Pokedex = () => {
     useEffect(() => {
         const getPokemons = async () => {
             try {
-                const res = await axios.get(
-                    "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20000"
-                );
-                const mypoke = await Promise.all(
-                    res.data.results.map(async (item) => {
-                        let [uri_photo, types] = await getSomeDatas(item.url);
-                        //console.log(uri_photo);
-                        return new Pokemon(item.name, item.url, uri_photo, types);
-                    })
-                );
-                setPokemons(mypoke);
-                setDisplay(mypoke)
-                setDataReady(true);
+                let pokemons = []
+                let render_pokemons = 151
+                for (let idx = 1; idx <= render_pokemons; idx++) { // Usar um loop de 1 a 10                    console.log('ali')
+                    const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idx}`)
+                    let { name, sprites, types } = pokemon.data
+                    console.log(name)
+                    pokemons.push(new Pokemon(idx, name, sprites, types))
+                }
+                setPokemons(pokemons);
+                setDisplay(pokemons)
+                setDataReady(pokemons);
             } catch (error) {
                 console.error("Não foi possível pegar os pokemons:", error);
             }
@@ -38,7 +38,6 @@ export const Pokedex = () => {
     }, []);
 
     useEffect(() => { //para o filtro
-        console.log(filter)
         if (filter === '') {
             setDisplay(pokemons)
             return
@@ -50,29 +49,27 @@ export const Pokedex = () => {
 
     }, [filter])
 
-    // Função para buscar a foto
-    async function getSomeDatas(url) {
-        let res = await axios.get(url);
-        return [res.data.sprites.front_default, res.data.types];
-    }
+
 
     const renderItem = ({ item }) => {
         const backgroundColor = Colorback[item.main_type]; // Obtém a cor do objeto item
         return (
-            <View style={[PokedexStyle.pokeCanva, { backgroundColor }]}>
+            <TouchableOpacity style={[PokedexStyle.pokeCanva, { backgroundColor }]}>
                 {dataReady ? (
                     <Image source={{ uri: item.photo }} style={{ width: 100, height: 100 }} />
                 ) : null}
                 <Text style={PokedexStyle.name}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
         );
     };
+
+
 
     const handlenewFilter = (option) => {
         setFilter(option)
     }
-    return (
 
+    return (
         <View style={PokedexStyle.main_container}>
             {dataReady ? (
                 <FlatList
@@ -82,7 +79,7 @@ export const Pokedex = () => {
                     keyExtractor={(item) => item.name}
                     numColumns={2}
                 />
-            ) : null}
+            ) : <LoadScreen />}
             {dataReady ? (
                 <View style={PokedexStyle.filter}>
                     <TextInput
