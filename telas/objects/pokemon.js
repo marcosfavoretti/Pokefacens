@@ -8,7 +8,7 @@ export class Pokemon {
 
     constructor(idx,name, photo, type) {
         this.pokedex_index = idx
-        this.photo = photo.front_default
+        this.photo = photo.other['official-artwork'].front_default
         this.name = name
         this.type = type
         this.getMain_type(type)

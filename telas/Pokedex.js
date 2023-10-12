@@ -5,6 +5,8 @@ import axios from "axios";
 import { Pokemon } from "./objects/pokemon";
 import { Colorback } from "./objects/type.enum";
 import { LoadScreen } from "./load/LoadScreen";
+import {PokemonInfoStyle, SeparatorStyle} from "./info-pokemon/pokemonInfoStyle"
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const Pokedex = ({ navigation }) => {
     const [pokemons, setPokemons] = useState([]);
@@ -17,8 +19,8 @@ export const Pokedex = ({ navigation }) => {
         const getPokemons = async () => {
             try {
                 let pokemons = []
-                let render_pokemons = 10
-                for (let idx = 1; idx <= render_pokemons; idx++) { // Usar um loop de 1 a 10                    console.log('ali')
+                let render_pokemons = 200
+                for (let idx = 1; idx <= render_pokemons; idx++) { // Usar um loop de 1 a 10                    
                     const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idx}`)
                     let { name, sprites, types } = pokemon.data
                     pokemons.push(new Pokemon(idx, name, sprites, types))
@@ -46,7 +48,7 @@ export const Pokedex = ({ navigation }) => {
 
     }, [filter])
 
-
+   
 
     const renderItem = ({ item }) => {
         const backgroundColor = Colorback[item.main_type.name]; // Obtém a cor do objeto item
@@ -64,33 +66,56 @@ export const Pokedex = ({ navigation }) => {
 
 
 
-    const handlenewFilter = (option) => {
-        setFilter(option)
+   
+    const SeparatorLine = () => {
+        return (
+            <View style={SeparatorStyle.container}>
+                <View style={SeparatorStyle.line1}></View>
+                <View style={SeparatorStyle.line2}>
+                    <View style={SeparatorStyle.diagonalLine}></View>
+                </View>
+                <View style={SeparatorStyle.line3}></View>
+            </View>
+        )
     }
 
     return (
-        <View style={PokedexStyle.main_container}>
-            {dataReady ? (
-                <FlatList
-                    style={PokedexStyle.scoll_container}
-                    data={display_pokemons}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.name}
-                    numColumns={2}
-                />
-            ) : <LoadScreen />}
-            {dataReady ? (
-                <View style={PokedexStyle.filter}>
+        
+        <View style={PokemonInfoStyle.container}>
+            <View style={PokemonInfoStyle.topBar}>
+                <Image resizeMode="contain" style={PokemonInfoStyle.bola} source={require('../assets/Bola.png')}></Image>
+                <Image resizeMode="contain" style={PokemonInfoStyle.bolinhas} source={require('../assets/bolinhas.png')}></Image>
+                <Image resizeMode="contain" style={PokemonInfoStyle.titulo} source={require('../assets/Titulo.png')}></Image>
+            </View>
+
+            <SeparatorLine></SeparatorLine>
+            
+            <View style={PokedexStyle.center}>
+                <View style={PokedexStyle.filter_canva}>
+                    <Icon name="search" size={20} color="gray" />
                     <TextInput
+                        style={PokedexStyle.filter}
                         value={filter}
-                        placeholder="filtrar pokemon ..."
-                        onChangeText={(option) => {
-                            handlenewFilter(option);
-                        }}
+                        placeholder="Search..."
+                        onChangeText={setFilter}
                     />
                 </View>
-            ) : null}
-        </View>
+            </View>
 
+            <View style={PokedexStyle.main_container}>
+                {dataReady ? (
+                    <FlatList
+                        style={PokedexStyle.scoll_container}
+                        data={display_pokemons}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.name}
+                        numColumns={2}
+                    />
+                ) : <LoadScreen />}
+                
+            </View>
+        </View>
     );
+
+
 };

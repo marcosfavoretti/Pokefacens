@@ -26,17 +26,18 @@ export const PokedexStyle = StyleSheet.create({
     name: {
         color: 'white'
     },
-    filter: {
-        position: "absolute",
-        width: "80%",
-        height: 50,
-        backgroundColor: 'white',
-        justifyContent: "center",
-        alignItems: "center",
-        top: "80%",
-        borderColor: 'black',
-        borderWidth: 1
+    filter:{
+        marginLeft:"3%",
+        width:"80%"
+    },
 
+    filter_canva: {
+        backgroundColor: 'white',
+        padding: '1%',
+        borderRadius: 3,
+        display:'flex',
+        flexDirection:'row',
+        width:'95%'
     },
     load_image: {
         resizeMode: "center"
@@ -46,6 +47,15 @@ export const PokedexStyle = StyleSheet.create({
         display: 'flex',
         justifyContent: "center",
         alignItems: 'center'
+    },
+    center:{
+        display:'flex',
+        width: '100%',
+        justifyContent:"center",
+        alignItems:"center",
+        marginBottom:'3%',
+        marginTop:"3%"
     }
+
 });
 
