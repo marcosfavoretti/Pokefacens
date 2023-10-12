@@ -9,7 +9,7 @@ export default function App() {
       <NavigationContainer>
           <Stack.Navigator initialRouteName='Pokedex'>
               <Stack.Screen name='Pokedex' component={Pokedex}></Stack.Screen>
-              <Stack.Screen name='InfoPokemon' component={InfoPokemon}></Stack.Screen>
+              <Stack.Screen name='InfoPokemon' options={{headerShown:false}} component={InfoPokemon}></Stack.Screen>
           </Stack.Navigator>
       </NavigationContainer>
   )

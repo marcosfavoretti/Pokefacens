@@ -17,11 +17,10 @@ export const Pokedex = ({ navigation }) => {
         const getPokemons = async () => {
             try {
                 let pokemons = []
-                let render_pokemons = 151
+                let render_pokemons = 10
                 for (let idx = 1; idx <= render_pokemons; idx++) { // Usar um loop de 1 a 10                    console.log('ali')
                     const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idx}`)
                     let { name, sprites, types } = pokemon.data
-                    console.log(name)
                     pokemons.push(new Pokemon(idx, name, sprites, types))
                 }
                 setPokemons(pokemons);
@@ -50,7 +49,7 @@ export const Pokedex = ({ navigation }) => {
 
 
     const renderItem = ({ item }) => {
-        const backgroundColor = Colorback[item.main_type]; // Obtém a cor do objeto item
+        const backgroundColor = Colorback[item.main_type.name]; // Obtém a cor do objeto item
         return (
             <TouchableOpacity style={[PokedexStyle.pokeCanva, { backgroundColor }]}
             onPress={()=> navigation.navigate('InfoPokemon',{name:item.name})}

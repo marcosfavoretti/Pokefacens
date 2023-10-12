@@ -14,6 +14,9 @@ export class Pokemon {
         this.getMain_type(type)
     }
     getMain_type() {
-        this.main_type = this.type[0].type.name //pega o primeiro tipo e fala que é o main type
+        this.main_type = {
+            name: this.type[0].type.name,
+            url: this.type[0].type.url
+        } //pega o primeiro tipo e fala que é o main type
     }
 }
