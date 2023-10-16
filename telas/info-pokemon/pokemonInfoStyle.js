@@ -69,6 +69,47 @@ export const MainPokemonStyle = {
         width: '95%',
         height: 230,
         borderRadius:5,
-        flexDirection:'row'
+        flexDirection:'row',
+    },
+    texto: {
+        flex:1,
+        width:'30%',
+        paddingLeft:5,
+        textTransform: 'capitalize',
+    },
+    img:{
+        width:'55%'
+    },
+    elements:{
+        alignItems:'center'
+    }
+
+}
+
+export const PokemonStatusStyle = {
+    text:{
+        color:'white',
+        fontSize:20,
+        textAlign:'center',
+        marginTop:20
+    },
+    container:{
+        width:'100%',
+    },
+    statusText:{
+        width:'18%',
+        fontSize:15,
+        color:'white'
+    },
+    bar:{
+        backgroundColor:'white',
+        height:25,
+        width:'82%',
+        borderRadius:3,
+        padding:2
+    },
+    item:{
+        flexDirection:'row',
+        padding: 15
     }
 }
