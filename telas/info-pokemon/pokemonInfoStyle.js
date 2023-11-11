@@ -74,15 +74,24 @@ export const MainPokemonStyle = {
     texto: {
         flex:1,
         width:'30%',
-        paddingLeft:5,
+        
         textTransform: 'capitalize',
     },
     img:{
+        resizeMode: "center",
         width:'55%'
     },
     elements:{
         alignItems:'center'
+    },
+    elements2:{
+    display: "flex",
+    flexDirection: 'row',
+    flexWrap: 'wrap', // Permite que os elementos sejam enrolados para a próxima linha
+    maxWidth: "100%", // Limite de largura antes de começar a nova linha (ajuste conforme necessário)
+
     }
+
 
 }
 
@@ -97,7 +106,7 @@ export const PokemonStatusStyle = {
         width:'100%',
     },
     statusText:{
-        width:'18%',
+        width:'20%',
         fontSize:15,
         color:'white'
     },
