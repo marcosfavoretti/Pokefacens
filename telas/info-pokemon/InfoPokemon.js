@@ -20,7 +20,7 @@ export const InfoPokemon = ({ route }) => {
                 console.log(type.type)
                 fightDetail(type.type.name).then((res) => {
                     console.log(res.força.map((filt) => filt.name));
-                    if (!pokemon.força) {
+                    if (!pokemon.força && !pokemon.fraqueza) {
                       pokemon['força'] = res.força.map((filt) => filt.name);
                       pokemon['fraqueza'] = res.fraqueza.map((filt) => filt.name);
                     } else {
